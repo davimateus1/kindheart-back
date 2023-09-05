@@ -1,0 +1,16 @@
+{
+  "name": "kindheart-back",
+  "version": "1.0.0",
+  "description": "Back-end KindHeart",
+  "main": "src/servet.ts",
+  "repository": "git@github.com:davimateus1/kindheart-back.git",
+  "author": "Davi Mateus <davi.2020109493@unicap.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "fastify": "^4.22.2"
+  }
+}
