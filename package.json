@@ -6,11 +6,19 @@
   "repository": "git@github.com:davimateus1/kindheart-back.git",
   "author": "Davi Mateus <davi.2020109493@unicap.br>",
   "license": "MIT",
-  "devDependencies": {
-    "tsx": "^3.12.8",
-    "typescript": "^5.2.2"
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix"
   },
   "dependencies": {
+    "eslint": "^8.49.0",
     "fastify": "^4.22.2"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.2.0",
+    "@rocketseat/eslint-config": "^2.1.0",
+    "prisma": "^5.2.0",
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2"
   }
 }

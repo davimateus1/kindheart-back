@@ -1,11 +1,5 @@
-import fastify from "fastify";
+import app from './app'
 
-const server = fastify();
-
-server.get("/", async () => {
-  return "Hello World";
-});
-
-server.listen({ port: 3333 }).then(() => {
-  console.log("Server is running on port 3333");
-});
+app.listen({ port: 3030 }, () => {
+  console.log('🚀 Server running at port 3030')
+})
