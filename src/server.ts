@@ -1,5 +1,10 @@
 import app from './app'
+import './database'
 
-app.listen({ port: 3030 }, () => {
-  console.log('🚀 Server running at port 3030')
+app.get('/', (_, reply) => {
+  reply.send('Hello World')
+})
+
+app.listen({ port: 5000 }, () => {
+  console.log('🚀 Server running at port 5000')
 })

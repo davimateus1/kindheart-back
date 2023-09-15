@@ -1,35 +1,18 @@
-version: '3'
+version: "3.9"
+
 services:
-  server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: nodejs-server
-    container_name: ${PROJECT_NAME}-server
-    restart: unless-stopped
-    env_file: .env
-    ports:
-      - '${SERVER_PORT}:3001'
-    volumes:
-      - .:/home/node/app
-    command: yarn prod
-    depends_on:
-      - db
-
-  db:
+  database:
     image: postgres
-    container_name: ${PROJECT_NAME}-db
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_DB}
-      - PGDATA=/var/lib/postgresql/data/pgdata
+    container_name: kindheart_api
+    restart: always
     ports:
-      - '${DATABASE_PORT}:5432'
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=kindheart_db
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
+      - pgdata:/data/postgres
+      
 volumes:
   pgdata:

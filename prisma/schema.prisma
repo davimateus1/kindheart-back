@@ -6,3 +6,116 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Gender {
+  MALE
+  FEMALE
+  NOT_INFORM
+}
+
+enum Role {
+  ADMIN
+  VOLUNTARY
+  ELDERLY
+}
+
+enum Status {
+  FREE
+  ALOCATED
+  STARTED
+  FINISHED
+  CANCELED
+}
+
+model User {
+  id                   Int        @id @default(autoincrement())
+  first_name           String
+  last_name            String
+  cpf                  String     @unique
+  birth_date           DateTime
+  email                String     @unique
+  gender               Gender     @default(NOT_INFORM)
+  password             String
+  role                 Role
+  address              String
+  photo                String
+  personal_phone       String
+  relative_phone       String
+  created_at           DateTime   @default(now())
+  updated_at           DateTime   @updatedAt
+  activities_voluntary Activity[] @relation("user_voluntary")
+  activities_elderly   Activity[] @relation("user_elderly")
+  chats_one            Chat[]     @relation("user_one")
+  chats_two            Chat[]     @relation("user_two")
+  author_messages      Message[]
+  friend_one           Friend[]   @relation("user_one")
+  friend_two           Friend[]   @relation("user_two")
+  user_reviews         Review[]
+}
+
+model Activity {
+  id                Int      @id @default(autoincrement())
+  topic             Topic    @relation(fields: [topic_id], references: [id])
+  user_voluntary    User     @relation(name: "user_voluntary", fields: [user_voluntary_id], references: [id])
+  user_elderly      User     @relation(name: "user_elderly", fields: [user_elderly_id], references: [id])
+  user_elderly_id   Int
+  user_voluntary_id Int
+  topic_id          Int
+  descricao         String
+  status            Status   @default(FREE)
+  curtidas          Int      @default(0)
+  imagem            String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  reviews           Review[]
+}
+
+model Review {
+  id              Int      @id @default(autoincrement())
+  user_reviewer   User     @relation(fields: [userId], references: [id])
+  activity_revied Activity @relation(fields: [activityId], references: [id])
+  userId          Int
+  activityId      Int
+  rating          Int      @default(0)
+  feedback        String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  author     User     @relation(fields: [author_id], references: [id])
+  chat       Chat     @relation(fields: [chat_id], references: [id])
+  author_id  Int
+  chat_id    Int
+  text       String
+  is_read    Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Chat {
+  id          Int       @id @default(autoincrement())
+  user_one    User      @relation(name: "user_one", fields: [user_one_id], references: [id])
+  user_two    User      @relation(name: "user_two", fields: [user_two_id], references: [id])
+  user_one_id Int
+  user_two_id Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  messages    Message[]
+}
+
+model Friend {
+  id          Int  @id @default(autoincrement())
+  user_one    User @relation(name: "user_one", fields: [user_one_id], references: [id])
+  user_two    User @relation(name: "user_two", fields: [user_two_id], references: [id])
+  user_one_id Int
+  user_two_id Int
+}
+
+model Topic {
+  id         Int        @id @default(autoincrement())
+  label      String
+  value      String     @unique
+  activities Activity[]
+}
