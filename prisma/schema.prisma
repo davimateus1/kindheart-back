@@ -41,15 +41,17 @@ model User {
   photo                String
   personal_phone       String
   relative_phone       String
+  verified             Boolean    @default(false)
+  user_code            String
   created_at           DateTime   @default(now())
   updated_at           DateTime   @updatedAt
   activities_voluntary Activity[] @relation("user_voluntary")
   activities_elderly   Activity[] @relation("user_elderly")
-  chats_one            Chat[]     @relation("user_one")
-  chats_two            Chat[]     @relation("user_two")
+  chats_sender         Chat[]     @relation("user_sender")
+  chats_receiver       Chat[]     @relation("user_receiver")
   author_messages      Message[]
-  friend_one           Friend[]   @relation("user_one")
-  friend_two           Friend[]   @relation("user_two")
+  friend_sender        Friend[]   @relation("user_sender")
+  friend_accepter      Friend[]   @relation("user_accepter")
   user_reviews         Review[]
 }
 
@@ -95,22 +97,22 @@ model Message {
 }
 
 model Chat {
-  id          Int       @id @default(autoincrement())
-  user_one    User      @relation(name: "user_one", fields: [user_one_id], references: [id])
-  user_two    User      @relation(name: "user_two", fields: [user_two_id], references: [id])
-  user_one_id Int
-  user_two_id Int
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  messages    Message[]
+  id               Int       @id @default(autoincrement())
+  user_sender      User      @relation(name: "user_sender", fields: [user_sender_id], references: [id])
+  user_receiver    User      @relation(name: "user_receiver", fields: [user_receiver_id], references: [id])
+  user_sender_id   Int
+  user_receiver_id Int
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  messages         Message[]
 }
 
 model Friend {
-  id          Int  @id @default(autoincrement())
-  user_one    User @relation(name: "user_one", fields: [user_one_id], references: [id])
-  user_two    User @relation(name: "user_two", fields: [user_two_id], references: [id])
-  user_one_id Int
-  user_two_id Int
+  id               Int  @id @default(autoincrement())
+  user_sender      User @relation(name: "user_sender", fields: [user_sender_id], references: [id])
+  user_accepter    User @relation(name: "user_accepter", fields: [user_accepter_id], references: [id])
+  user_sender_id   Int
+  user_accepter_id Int
 }
 
 model Topic {

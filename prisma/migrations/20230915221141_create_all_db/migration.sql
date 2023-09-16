@@ -22,6 +22,8 @@ CREATE TABLE "User" (
     "photo" TEXT NOT NULL,
     "personal_phone" TEXT NOT NULL,
     "relative_phone" TEXT NOT NULL,
+    "verified" BOOLEAN NOT NULL DEFAULT false,
+    "user_code" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -73,8 +75,8 @@ CREATE TABLE "Message" (
 -- CreateTable
 CREATE TABLE "Chat" (
     "id" SERIAL NOT NULL,
-    "user_one_id" INTEGER NOT NULL,
-    "user_two_id" INTEGER NOT NULL,
+    "user_sender_id" INTEGER NOT NULL,
+    "user_receiver_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -84,8 +86,8 @@ CREATE TABLE "Chat" (
 -- CreateTable
 CREATE TABLE "Friend" (
     "id" SERIAL NOT NULL,
-    "user_one_id" INTEGER NOT NULL,
-    "user_two_id" INTEGER NOT NULL,
+    "user_sender_id" INTEGER NOT NULL,
+    "user_accepter_id" INTEGER NOT NULL,
 
     CONSTRAINT "Friend_pkey" PRIMARY KEY ("id")
 );
@@ -130,13 +132,13 @@ ALTER TABLE "Message" ADD CONSTRAINT "Message_author_id_fkey" FOREIGN KEY ("auth
 ALTER TABLE "Message" ADD CONSTRAINT "Message_chat_id_fkey" FOREIGN KEY ("chat_id") REFERENCES "Chat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_one_id_fkey" FOREIGN KEY ("user_one_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_sender_id_fkey" FOREIGN KEY ("user_sender_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_two_id_fkey" FOREIGN KEY ("user_two_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_receiver_id_fkey" FOREIGN KEY ("user_receiver_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_one_id_fkey" FOREIGN KEY ("user_one_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_sender_id_fkey" FOREIGN KEY ("user_sender_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_two_id_fkey" FOREIGN KEY ("user_two_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_accepter_id_fkey" FOREIGN KEY ("user_accepter_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
