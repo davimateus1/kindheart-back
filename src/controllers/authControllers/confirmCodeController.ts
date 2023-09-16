@@ -1,7 +1,5 @@
-// routes/userConfirmationController.ts
-
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { confirmUserCode } from '../../useCases'
+import { confirmUserCode } from '@/useCases'
 
 interface ConfirmUserCodeData {
   user_code: string

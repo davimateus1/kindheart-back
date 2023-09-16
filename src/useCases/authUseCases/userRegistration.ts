@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt'
 import { v2 as cloudinary } from 'cloudinary'
-import { generateConfirmationCode } from '../../utils'
-import prisma from '../../database/client'
-import { GenderType, RoleType } from '../../@types'
+
+import { generateConfirmationCode } from '@/utils'
+import prisma from '@/database/client'
+import { GenderType, RoleType } from '@/types'
 
 interface UserData {
   cpf: string
@@ -11,7 +12,7 @@ interface UserData {
   photo: string
   gender: GenderType
   address: string
-  birth_date: Date
+  birth_date: string
   password: string
   last_name: string
   first_name: string
@@ -36,17 +37,9 @@ async function registerUser({
   const confirmationCode = generateConfirmationCode()
   const encryptedPassword = await bcrypt.hash(password, 10)
 
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  })
-
   const uploadedPhoto = await cloudinary.uploader
     .upload(photo, { folder: 'kindheart' })
-    .then((result) => {
-      return result.url
-    })
+    .then((result) => result.url)
 
   const user = await prisma.user.create({
     data: {

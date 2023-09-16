@@ -1,30 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { GenderType, RoleType } from '../../@types'
-import { Twilio } from 'twilio'
-import { registerUser } from '../../useCases'
+import { registerUser } from '@/useCases'
+import { registerUserValidator } from '@/validators'
 
-interface UserData {
-  cpf: string
-  role: RoleType
-  email: string
-  photo: string
-  gender: GenderType
-  address: string
-  birth_date: Date
-  password: string
-  last_name: string
-  first_name: string
-  personal_phone: string
-  relative_phone: string
-}
+import { Twilio } from 'twilio'
 
 async function registerUserController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   try {
-    const userData = request.body as UserData
+    const userData = registerUserValidator.parse(request.body)
     const user = await registerUser(userData)
 
     const client = new Twilio(
@@ -34,9 +20,9 @@ async function registerUserController(
 
     try {
       await client.messages.create({
-        from: process.env.TWILIO_PHONE_NUMBER,
+        from: `+${process.env.TWILIO_PHONE_NUMBER}`,
         to: `+55${user.personal_phone}`,
-        body: `Olá, ${user.first_name}! Seja bem-vindo(a) ao KindHeart. Seu código de acesso é ${user.user_code}.`,
+        body: `Olá, ${user.first_name}! Seja bem-vindo(a) ao KindHeart. Seu código de verificação é ${user.user_code}.`,
       })
 
       return reply.status(201).send(user)
