@@ -18,3 +18,8 @@ export const registerUserValidator = z.object({
 export const confirmCodeValidator = z.object({
   user_code: z.string().min(6).max(6),
 })
+
+export const userLoginValidator = z.object({
+  email: z.string().email(),
+  password: z.string().min(6).max(255),
+})

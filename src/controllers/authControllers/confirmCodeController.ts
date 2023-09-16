@@ -15,7 +15,7 @@ async function confirmUserController(
 
     return reply
       .status(200)
-      .send({ message: 'Usuário confirmado com sucesso.' })
+      .send({ message: 'Successfully confirmed user registration!' })
   } catch (error) {
     return error instanceof Error
       ? reply.status(400).send({ message: error.message })
