@@ -12,6 +12,10 @@ async function userLoginController(
     const { email, password } = userLoginValidator.parse(request.body)
     const user = await userLogin({ email, password })
 
+    if (!user.verified) {
+      return reply.status(200).send({ verified: user.verified })
+    }
+
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET ?? '', {
       expiresIn: '30d',
     })

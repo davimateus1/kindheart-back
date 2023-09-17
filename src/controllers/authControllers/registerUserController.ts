@@ -1,9 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { registerUser } from '@/useCases'
+import { registerUser, sendCode } from '@/useCases'
 import { registerUserValidator } from '@/validators'
-
-import { Twilio } from 'twilio'
 
 async function registerUserController(
   request: FastifyRequest,
@@ -13,23 +11,16 @@ async function registerUserController(
     const userData = registerUserValidator.parse(request.body)
     const user = await registerUser(userData)
 
-    const client = new Twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN,
-    )
-
     try {
-      await client.messages.create({
-        from: `+${process.env.TWILIO_PHONE_NUMBER}`,
-        to: `+55${user.personal_phone}`,
-        body: `Olá, ${user.first_name}! Seja bem-vindo(a) ao KindHeart. Seu código de verificação é ${user.user_code}.`,
+      await sendCode({
+        user_code: user.user_code,
+        first_name: user.first_name,
+        personal_phone: user.personal_phone,
       })
 
       return reply.status(201).send(user)
     } catch {
-      return reply
-        .status(500)
-        .send({ message: 'Not able to send SMS to the provided number.' })
+      return reply.status(500).send({ message: 'Error trying to send SMS.' })
     }
   } catch (error) {
     return error instanceof Error

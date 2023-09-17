@@ -23,3 +23,9 @@ export const userLoginValidator = z.object({
   email: z.string().email(),
   password: z.string().min(6).max(255),
 })
+
+export const sendCodeValidator = z.object({
+  user_code: z.string().min(6).max(6),
+  first_name: z.string().min(2).max(255),
+  personal_phone: z.string().min(11).max(14),
+})
