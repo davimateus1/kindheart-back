@@ -108,6 +108,9 @@ CREATE UNIQUE INDEX "User_cpf_key" ON "User"("cpf");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_personal_phone_key" ON "User"("personal_phone");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Topic_value_key" ON "Topic"("value");
 
 -- AddForeignKey

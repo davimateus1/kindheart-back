@@ -11,15 +11,11 @@ async function sendCode({
   first_name,
   personal_phone,
 }: SendCodeData) {
-  try {
-    return await twilioClient.messages.create({
-      from: `+${process.env.TWILIO_PHONE_NUMBER}`,
-      to: `+55${personal_phone}`,
-      body: `Olá, ${first_name}! Seja bem-vindo(a) ao KindHeart. Seu código de verificação é ${user_code}.`,
-    })
-  } catch {
-    throw new Error('Error trying to send SMS.')
-  }
+  return await twilioClient.messages.create({
+    from: `+${process.env.TWILIO_PHONE_NUMBER}`,
+    to: `+55${personal_phone}`,
+    body: `Olá, ${first_name}! Seja bem-vindo(a) ao KindHeart. Seu código de verificação é ${user_code}.`,
+  })
 }
 
 export { sendCode }

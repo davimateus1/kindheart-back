@@ -39,7 +39,7 @@ model User {
   role                 Role
   address              String
   photo                String
-  personal_phone       String
+  personal_phone       String    @unique
   relative_phone       String
   verified             Boolean    @default(false)
   user_code            String

@@ -11,17 +11,13 @@ async function registerUserController(
     const userData = registerUserValidator.parse(request.body)
     const user = await registerUser(userData)
 
-    try {
-      await sendCode({
-        user_code: user.user_code,
-        first_name: user.first_name,
-        personal_phone: user.personal_phone,
-      })
+    await sendCode({
+      user_code: user.user_code,
+      first_name: user.first_name,
+      personal_phone: user.personal_phone,
+    })
 
-      return reply.status(201).send(user)
-    } catch {
-      return reply.status(500).send({ message: 'Error trying to send SMS.' })
-    }
+    return reply.status(201).send(user)
   } catch (error) {
     return error instanceof Error
       ? reply.status(400).send({ message: error.message })

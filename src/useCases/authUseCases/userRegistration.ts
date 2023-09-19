@@ -3,11 +3,10 @@ import { v2 as cloudinary } from 'cloudinary'
 
 import { generateConfirmationCode } from '@/utils'
 import prisma from '@/database/client'
-import { GenderType, RoleType } from '@/types'
+import { GenderType } from '@/types'
 
 interface UserData {
   cpf: string
-  role: RoleType
   email: string
   photo: string
   gender: GenderType
@@ -22,7 +21,6 @@ interface UserData {
 
 async function registerUser({
   cpf,
-  role,
   email,
   photo,
   gender,
@@ -41,6 +39,22 @@ async function registerUser({
     .upload(photo, { folder: 'kindheart' })
     .then((result) => result.url)
 
+  const replaceDate = birth_date
+    .replace(/\//g, '-')
+    .split('-')
+    .reverse()
+    .join('-')
+
+  const formattedPhones = {
+    personalPhone: personal_phone.replace(/\D/g, ''),
+    relative_phone: relative_phone.replace(/\D/g, ''),
+  }
+
+  const role =
+    new Date().getFullYear() - new Date(birth_date).getFullYear() >= 60
+      ? 'ELDERLY'
+      : 'VOLUNTARY'
+
   const user = await prisma.user.create({
     data: {
       cpf,
@@ -50,12 +64,12 @@ async function registerUser({
       address,
       last_name,
       first_name,
-      birth_date,
-      personal_phone,
-      relative_phone,
       photo: uploadedPhoto,
-      password: encryptedPassword,
       user_code: confirmationCode,
+      password: encryptedPassword,
+      personal_phone: formattedPhones.personalPhone,
+      relative_phone: formattedPhones.relative_phone,
+      birth_date: new Date(replaceDate).toISOString(),
     },
   })
 
