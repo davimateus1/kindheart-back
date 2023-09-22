@@ -30,7 +30,11 @@ async function userLogin({ email, password }: UserLoginData) {
       personal_phone: user.personal_phone,
     })
 
-    return { verified: user.verified }
+    return {
+      verified: user.verified,
+      first_name: user.first_name,
+      personal_phone: user.personal_phone,
+    }
   }
 
   return user

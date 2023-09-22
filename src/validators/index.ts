@@ -27,3 +27,8 @@ export const sendCodeValidator = z.object({
   first_name: z.string().min(2).max(255),
   personal_phone: z.string().min(11).max(14),
 })
+
+export const getUserProfileValidator = z.object({
+  user_id: z.string(),
+  user_role: z.enum(['VOLUNTARY', 'ELDERLY']),
+})

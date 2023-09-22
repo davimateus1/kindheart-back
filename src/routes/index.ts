@@ -1,6 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { authRoutes } from './auth-routes'
+import { authRoutes } from './authRoutes'
+import { userRoutes } from './userRoutes'
 
-export async function routes(app: FastifyInstance) {
+async function routes(app: FastifyInstance) {
   app.register(authRoutes, { prefix: '/auth' })
+  app.register(userRoutes, { prefix: '/users' })
 }
+
+export { routes }

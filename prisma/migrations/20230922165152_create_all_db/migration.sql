@@ -36,10 +36,10 @@ CREATE TABLE "Activity" (
     "user_elderly_id" INTEGER NOT NULL,
     "user_voluntary_id" INTEGER NOT NULL,
     "topic_id" INTEGER NOT NULL,
-    "descricao" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'FREE',
-    "curtidas" INTEGER NOT NULL DEFAULT 0,
-    "imagem" TEXT NOT NULL,
+    "likes" INTEGER NOT NULL DEFAULT 0,
+    "image" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

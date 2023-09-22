@@ -8,7 +8,7 @@ import {
 } from '@/controllers'
 import prisma from '@/database/client'
 
-export async function authRoutes(app: FastifyInstance) {
+async function authRoutes(app: FastifyInstance) {
   app.post('/register', registerUserController)
   app.patch('/confirm', confirmUserController)
   app.post('/login', userLoginController)
@@ -18,4 +18,10 @@ export async function authRoutes(app: FastifyInstance) {
     const users = await prisma.user.findMany()
     return reply.status(200).send(users)
   })
+  app.delete('/users', async (_, reply) => {
+    await prisma.user.deleteMany()
+    return reply.status(204).send()
+  })
 }
+
+export { authRoutes }

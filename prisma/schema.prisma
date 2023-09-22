@@ -39,7 +39,7 @@ model User {
   role                 Role
   address              String
   photo                String
-  personal_phone       String    @unique
+  personal_phone       String     @unique
   relative_phone       String
   verified             Boolean    @default(false)
   user_code            String
@@ -63,10 +63,10 @@ model Activity {
   user_elderly_id   Int
   user_voluntary_id Int
   topic_id          Int
-  descricao         String
+  description       String
   status            Status   @default(FREE)
-  curtidas          Int      @default(0)
-  imagem            String
+  likes             Int      @default(0)
+  image             String
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
   reviews           Review[]

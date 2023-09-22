@@ -13,7 +13,11 @@ async function userLoginController(
     const user = await userLogin({ email, password })
 
     if (!user.verified) {
-      return reply.status(200).send({ verified: user.verified })
+      return reply.status(200).send({
+        verified: user.verified,
+        first_name: user.first_name,
+        personal_phone: user.personal_phone,
+      })
     }
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET ?? '', {
