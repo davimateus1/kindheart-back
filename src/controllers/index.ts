@@ -4,3 +4,6 @@ export * from './authControllers/userLoginController'
 export * from './authControllers/sendCodeController'
 
 export * from './userControllers/getUserProfileController'
+
+export * from './feedControllers/getUserFeedController'
+export * from './feedControllers/createFeedPostController'

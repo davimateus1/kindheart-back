@@ -32,3 +32,15 @@ export const getUserProfileValidator = z.object({
   user_id: z.string(),
   user_role: z.enum(['VOLUNTARY', 'ELDERLY']),
 })
+
+export const getUserFeedValidator = z.object({
+  user_id: z.string(),
+  take: z.string(),
+})
+
+export const createFeedPostValidator = z.object({
+  user_id: z.string(),
+  topic_id: z.string(),
+  description: z.string(),
+  image: z.string(),
+})

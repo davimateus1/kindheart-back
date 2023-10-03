@@ -4,3 +4,6 @@ export * from './authUseCases/userLogin'
 export * from './authUseCases/sendCode'
 
 export * from './userUseCases/getUserProfile'
+
+export * from './feedUseCases/getUserFeed'
+export * from './feedUseCases/createFeedPost'

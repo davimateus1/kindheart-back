@@ -27,32 +27,39 @@ enum Status {
   CANCELED
 }
 
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELED
+}
+
 model User {
-  id                   Int        @id @default(autoincrement())
+  id                   Int          @id @default(autoincrement())
   first_name           String
   last_name            String
-  cpf                  String     @unique
+  cpf                  String       @unique
   birth_date           DateTime
-  email                String     @unique
-  gender               Gender     @default(NOT_INFORM)
+  email                String       @unique
+  gender               Gender       @default(NOT_INFORM)
   password             String
   role                 Role
   address              String
   photo                String
-  personal_phone       String     @unique
+  personal_phone       String       @unique
   relative_phone       String
-  verified             Boolean    @default(false)
+  verified             Boolean      @default(false)
   user_code            String
-  created_at           DateTime   @default(now())
-  updated_at           DateTime   @updatedAt
-  activities_voluntary Activity[] @relation("user_voluntary")
-  activities_elderly   Activity[] @relation("user_elderly")
-  chats_sender         Chat[]     @relation("user_sender")
-  chats_receiver       Chat[]     @relation("user_receiver")
+  created_at           DateTime     @default(now())
+  updated_at           DateTime     @updatedAt
+  activities_voluntary Activity[]   @relation("user_voluntary")
+  activities_elderly   Activity[]   @relation("user_elderly")
+  chats_sender         Chat[]       @relation("user_sender")
+  chats_receiver       Chat[]       @relation("user_receiver")
   author_messages      Message[]
-  friend_sender        Friend[]   @relation("user_sender")
-  friend_accepter      Friend[]   @relation("user_accepter")
   user_reviews         Review[]
+  user_one_friendship  Friendship[] @relation("user_one_friendship")
+  user_two_friendship  Friendship[] @relation("user_two_friendship")
 }
 
 model Activity {
@@ -60,8 +67,8 @@ model Activity {
   topic             Topic    @relation(fields: [topic_id], references: [id])
   user_voluntary    User     @relation(name: "user_voluntary", fields: [user_voluntary_id], references: [id])
   user_elderly      User     @relation(name: "user_elderly", fields: [user_elderly_id], references: [id])
-  user_elderly_id   Int
-  user_voluntary_id Int
+  user_elderly_id   Int      @default(0)
+  user_voluntary_id Int      @default(0)
   topic_id          Int
   description       String
   status            Status   @default(FREE)
@@ -107,17 +114,20 @@ model Chat {
   messages         Message[]
 }
 
-model Friend {
-  id               Int  @id @default(autoincrement())
-  user_sender      User @relation(name: "user_sender", fields: [user_sender_id], references: [id])
-  user_accepter    User @relation(name: "user_accepter", fields: [user_accepter_id], references: [id])
-  user_sender_id   Int
-  user_accepter_id Int
-}
-
 model Topic {
   id         Int        @id @default(autoincrement())
   label      String
   value      String     @unique
   activities Activity[]
+}
+
+model Friendship {
+  id          Int              @id @default(autoincrement())
+  user_one    User             @relation(name: "user_one_friendship", fields: [user_one_id], references: [id])
+  use_two     User             @relation(name: "user_two_friendship", fields: [user_two_id], references: [id])
+  user_one_id Int
+  user_two_id Int
+  status      FriendshipStatus
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
 }

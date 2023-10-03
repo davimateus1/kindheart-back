@@ -7,6 +7,9 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'VOLUNTARY', 'ELDERLY');
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('FREE', 'ALOCATED', 'STARTED', 'FINISHED', 'CANCELED');
 
+-- CreateEnum
+CREATE TYPE "FriendshipStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -84,21 +87,24 @@ CREATE TABLE "Chat" (
 );
 
 -- CreateTable
-CREATE TABLE "Friend" (
-    "id" SERIAL NOT NULL,
-    "user_sender_id" INTEGER NOT NULL,
-    "user_accepter_id" INTEGER NOT NULL,
-
-    CONSTRAINT "Friend_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Topic" (
     "id" SERIAL NOT NULL,
     "label" TEXT NOT NULL,
     "value" TEXT NOT NULL,
 
     CONSTRAINT "Topic_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Friendship" (
+    "id" SERIAL NOT NULL,
+    "user_one_id" INTEGER NOT NULL,
+    "user_two_id" INTEGER NOT NULL,
+    "status" "FriendshipStatus" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Friendship_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -141,7 +147,7 @@ ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_sender_id_fkey" FOREIGN KEY ("user_
 ALTER TABLE "Chat" ADD CONSTRAINT "Chat_user_receiver_id_fkey" FOREIGN KEY ("user_receiver_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_sender_id_fkey" FOREIGN KEY ("user_sender_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Friendship" ADD CONSTRAINT "Friendship_user_one_id_fkey" FOREIGN KEY ("user_one_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Friend" ADD CONSTRAINT "Friend_user_accepter_id_fkey" FOREIGN KEY ("user_accepter_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Friendship" ADD CONSTRAINT "Friendship_user_two_id_fkey" FOREIGN KEY ("user_two_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
