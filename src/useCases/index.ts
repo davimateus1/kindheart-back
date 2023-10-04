@@ -7,3 +7,4 @@ export * from './userUseCases/getUserProfile'
 
 export * from './feedUseCases/getUserFeed'
 export * from './feedUseCases/createFeedPost'
+export * from './feedUseCases/likePost'

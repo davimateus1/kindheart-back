@@ -7,3 +7,4 @@ export * from './userControllers/getUserProfileController'
 
 export * from './feedControllers/getUserFeedController'
 export * from './feedControllers/createFeedPostController'
+export * from './feedControllers/likePostController'

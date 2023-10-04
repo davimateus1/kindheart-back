@@ -44,3 +44,8 @@ export const createFeedPostValidator = z.object({
   description: z.string(),
   image: z.string(),
 })
+
+export const likePostValidator = z.object({
+  user_id: z.string(),
+  post_id: z.string(),
+})

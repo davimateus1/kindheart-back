@@ -73,6 +73,7 @@ model Activity {
   description       String
   status            Status   @default(FREE)
   likes             Int      @default(0)
+  likedBy           Int[]    @default([])
   image             String
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt

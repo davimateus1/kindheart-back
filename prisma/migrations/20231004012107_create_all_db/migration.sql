@@ -36,12 +36,13 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Activity" (
     "id" SERIAL NOT NULL,
-    "user_elderly_id" INTEGER NOT NULL,
-    "user_voluntary_id" INTEGER NOT NULL,
+    "user_elderly_id" INTEGER NOT NULL DEFAULT 0,
+    "user_voluntary_id" INTEGER NOT NULL DEFAULT 0,
     "topic_id" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'FREE',
     "likes" INTEGER NOT NULL DEFAULT 0,
+    "likedBy" INTEGER[] DEFAULT ARRAY[]::INTEGER[],
     "image" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
