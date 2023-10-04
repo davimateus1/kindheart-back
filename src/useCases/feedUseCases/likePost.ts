@@ -25,6 +25,7 @@ async function likePost(post_id: string, user_id: string) {
       },
       data: {
         likedBy: post.likedBy,
+        likes: { decrement: 1 },
       },
     })
 
@@ -39,6 +40,7 @@ async function likePost(post_id: string, user_id: string) {
     },
     data: {
       likedBy: post.likedBy,
+      likes: { increment: 1 },
     },
   })
 

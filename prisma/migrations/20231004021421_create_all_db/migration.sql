@@ -36,8 +36,8 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Activity" (
     "id" SERIAL NOT NULL,
-    "user_elderly_id" INTEGER NOT NULL DEFAULT 0,
-    "user_voluntary_id" INTEGER NOT NULL DEFAULT 0,
+    "user_elderly_id" INTEGER NOT NULL,
+    "user_voluntary_id" INTEGER,
     "topic_id" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'FREE',
@@ -122,9 +122,6 @@ CREATE UNIQUE INDEX "Topic_value_key" ON "Topic"("value");
 
 -- AddForeignKey
 ALTER TABLE "Activity" ADD CONSTRAINT "Activity_topic_id_fkey" FOREIGN KEY ("topic_id") REFERENCES "Topic"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Activity" ADD CONSTRAINT "Activity_user_voluntary_id_fkey" FOREIGN KEY ("user_voluntary_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Activity" ADD CONSTRAINT "Activity_user_elderly_id_fkey" FOREIGN KEY ("user_elderly_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

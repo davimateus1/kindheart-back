@@ -52,7 +52,6 @@ model User {
   user_code            String
   created_at           DateTime     @default(now())
   updated_at           DateTime     @updatedAt
-  activities_voluntary Activity[]   @relation("user_voluntary")
   activities_elderly   Activity[]   @relation("user_elderly")
   chats_sender         Chat[]       @relation("user_sender")
   chats_receiver       Chat[]       @relation("user_receiver")
@@ -64,11 +63,10 @@ model User {
 
 model Activity {
   id                Int      @id @default(autoincrement())
-  topic             Topic    @relation(fields: [topic_id], references: [id])
-  user_voluntary    User     @relation(name: "user_voluntary", fields: [user_voluntary_id], references: [id])
+  topic             Topic    @relation(name: "activity_topic", fields: [topic_id], references: [id])
   user_elderly      User     @relation(name: "user_elderly", fields: [user_elderly_id], references: [id])
-  user_elderly_id   Int      @default(0)
-  user_voluntary_id Int      @default(0)
+  user_elderly_id   Int      
+  user_voluntary_id Int?    
   topic_id          Int
   description       String
   status            Status   @default(FREE)
@@ -116,10 +114,10 @@ model Chat {
 }
 
 model Topic {
-  id         Int        @id @default(autoincrement())
-  label      String
-  value      String     @unique
-  activities Activity[]
+  id             Int        @id @default(autoincrement())
+  label          String
+  value          String     @unique
+  activity_topic Activity[] @relation("activity_topic")
 }
 
 model Friendship {

@@ -49,3 +49,8 @@ export const likePostValidator = z.object({
   user_id: z.string(),
   post_id: z.string(),
 })
+
+export const createTopicValidator = z.object({
+  label: z.string(),
+  value: z.string(),
+})

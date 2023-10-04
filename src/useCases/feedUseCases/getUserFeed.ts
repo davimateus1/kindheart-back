@@ -23,6 +23,8 @@ async function getUserFeed(user_id: string, take: string) {
     return friend.user_one_id
   })
 
+  const isFriend = friendsIds.includes(userId)
+
   const feed = await prisma.activity.findMany({
     where: {
       user_elderly_id: {
@@ -33,9 +35,18 @@ async function getUserFeed(user_id: string, take: string) {
     orderBy: {
       created_at: 'desc',
     },
+    include: {
+      user_elderly: {
+        select: { photo: true, first_name: true, last_name: true },
+      },
+    },
   })
 
-  return feed
+  const feedWithIsFriend = feed.map((post) => {
+    return { ...post, isFriend }
+  })
+
+  return feedWithIsFriend
 }
 
 export { getUserFeed }
