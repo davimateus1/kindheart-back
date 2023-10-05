@@ -54,3 +54,20 @@ export const createTopicValidator = z.object({
   label: z.string(),
   value: z.string(),
 })
+
+export const acceptFriendshipValidator = z.object({
+  user_one_id: z.string(),
+  user_two_id: z.string(),
+  action: z.enum(['ACCEPT', 'REJECT']),
+})
+
+export const sendFriendshipValidator = z.object({
+  user_one_id: z.string(),
+  user_two_id: z.string(),
+})
+
+export const allUsersValidator = z.object({
+  user_id: z.string(),
+  take: z.string(),
+  search: z.string().optional(),
+})

@@ -7,7 +7,7 @@ async function likePostController(
   reply: FastifyReply,
 ) {
   try {
-    const { user_id, post_id } = likePostValidator.parse(request.params)
+    const { user_id, post_id } = likePostValidator.parse(request.body)
     const like = await likePost(post_id, user_id)
 
     return reply

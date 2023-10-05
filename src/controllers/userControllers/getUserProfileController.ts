@@ -8,7 +8,7 @@ async function getUserProfileController(
 ) {
   try {
     const { user_id, user_role } = getUserProfileValidator.parse(request.params)
-    const user = await getUserProfile(Number(user_id), user_role)
+    const user = await getUserProfile(user_id, user_role)
 
     return reply.status(200).send(user)
   } catch (error) {

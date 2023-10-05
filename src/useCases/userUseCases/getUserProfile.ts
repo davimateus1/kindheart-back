@@ -1,9 +1,11 @@
 import prisma from '@/database/client'
 import { RoleType } from '@/types'
 
-async function getUserProfile(user_id: number, user_role: RoleType) {
+async function getUserProfile(user_id: string, user_role: RoleType) {
+  const userId = Number(user_id)
+
   const user = await prisma.user.findUnique({
-    where: { id: user_id },
+    where: { id: userId },
     select: {
       id: true,
       first_name: true,
