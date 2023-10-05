@@ -16,7 +16,7 @@ async function feedRoutes(app: FastifyInstance) {
   app.patch('/post/like', likePostController)
 
   app.post('/friendship-request', friendshipRequestController)
-  app.post('/friend-action', friendController)
+  app.patch('/friendship-action', friendController)
 
   app.post('/topic', createTopicController)
   app.get('/topics', getTopicsController)

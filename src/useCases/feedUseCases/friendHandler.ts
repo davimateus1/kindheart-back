@@ -8,6 +8,18 @@ async function friendHandler(
   const userId = Number(user_one_id)
   const friendId = Number(user_two_id)
 
+  const isFriend = await prisma.friendship.findFirst({
+    where: {
+      user_one_id: userId,
+      user_two_id: friendId,
+      status: 'ACCEPTED',
+    },
+  })
+
+  if (isFriend) {
+    throw new Error('You are already friends.')
+  }
+
   const pendingFriendship = await prisma.friendship.findFirst({
     where: {
       user_one_id: userId,
