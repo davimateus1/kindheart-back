@@ -2,6 +2,7 @@ import prisma from '@/database/client'
 
 async function getUserFeed(user_id: string, take: string) {
   const userId = Number(user_id)
+  const totalPosts = await prisma.activity.count()
 
   const friends = await prisma.friendship.findMany({
     where: {
@@ -23,30 +24,42 @@ async function getUserFeed(user_id: string, take: string) {
     return friend.user_one_id
   })
 
-  const isFriend = friendsIds.includes(userId)
+  const isFriend = (id: number) => friendsIds.includes(id)
 
   const feed = await prisma.activity.findMany({
-    where: {
-      user_elderly_id: {
-        in: [...friendsIds, userId],
-      },
-    },
     take: Number(take),
-    orderBy: {
-      created_at: 'desc',
-    },
+    orderBy: { likes: 'desc' },
     include: {
+      topic: true,
       user_elderly: {
         select: { photo: true, first_name: true, last_name: true },
       },
     },
   })
 
-  const feedWithIsFriend = feed.map((post) => {
-    return { ...post, isFriend }
-  })
+  const feedFriends = []
+  const feedNotFriends = []
 
-  return feedWithIsFriend
+  for (const activity of feed) {
+    const isFriendUser = isFriend(activity.user_elderly_id)
+    if (isFriendUser) {
+      feedFriends.push({
+        ...activity,
+        is_friend: true,
+        total_posts: totalPosts,
+      })
+    } else {
+      feedNotFriends.push({
+        ...activity,
+        isFriend: false,
+        total_posts: totalPosts,
+      })
+    }
+  }
+
+  const feedFinal = [...feedFriends, ...feedNotFriends]
+
+  return feedFinal
 }
 
 export { getUserFeed }

@@ -24,7 +24,7 @@ async function createFeedPost(
   const post = await prisma.activity.create({
     data: {
       user_elderly_id: user.id,
-      user_voluntary_id: -1,
+      user_voluntary_id: null,
       description,
       image: uploadedPhoto,
       topic_id: topicId,

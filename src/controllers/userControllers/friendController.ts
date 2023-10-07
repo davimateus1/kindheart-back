@@ -11,7 +11,7 @@ async function friendController(request: FastifyRequest, reply: FastifyReply) {
 
     return reply.status(201).send({
       message: `${
-        action === 'ACCEPT' ? 'Friendship accepted.' : 'Friendship rejected.'
+        action === 'ADD' ? 'Friendship addeed.' : 'Friendship removed.'
       }`,
     })
   } catch (error) {

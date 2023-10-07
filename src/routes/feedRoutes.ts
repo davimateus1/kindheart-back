@@ -1,8 +1,6 @@
 import {
   createFeedPostController,
   createTopicController,
-  friendController,
-  friendshipRequestController,
   getTopicsController,
   getUserFeedController,
   likePostController,
@@ -14,9 +12,6 @@ async function feedRoutes(app: FastifyInstance) {
   app.post('/post', createFeedPostController)
   app.get('/:user_id/:take', getUserFeedController)
   app.patch('/post/like', likePostController)
-
-  app.post('/friendship-request', friendshipRequestController)
-  app.patch('/friendship-action', friendController)
 
   app.post('/topic', createTopicController)
   app.get('/topics', getTopicsController)

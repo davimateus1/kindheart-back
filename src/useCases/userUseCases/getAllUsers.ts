@@ -17,7 +17,6 @@ async function getAllUsers(user_id: string, take?: string, search?: string) {
     if (friend.user_one_id === userId) {
       return friend.user_two_id
     }
-
     return friend.user_one_id
   })
 

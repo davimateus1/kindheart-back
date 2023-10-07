@@ -127,6 +127,9 @@ ALTER TABLE "Activity" ADD CONSTRAINT "Activity_topic_id_fkey" FOREIGN KEY ("top
 ALTER TABLE "Activity" ADD CONSTRAINT "Activity_user_elderly_id_fkey" FOREIGN KEY ("user_elderly_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Activity" ADD CONSTRAINT "Activity_user_voluntary_id_fkey" FOREIGN KEY ("user_voluntary_id") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey

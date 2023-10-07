@@ -53,6 +53,7 @@ model User {
   created_at           DateTime     @default(now())
   updated_at           DateTime     @updatedAt
   activities_elderly   Activity[]   @relation("user_elderly")
+  activities_voluntary Activity[]   @relation("user_voluntary")
   chats_sender         Chat[]       @relation("user_sender")
   chats_receiver       Chat[]       @relation("user_receiver")
   author_messages      Message[]
@@ -65,6 +66,7 @@ model Activity {
   id                Int      @id @default(autoincrement())
   topic             Topic    @relation(name: "activity_topic", fields: [topic_id], references: [id])
   user_elderly      User     @relation(name: "user_elderly", fields: [user_elderly_id], references: [id])
+  user_voluntary    User?    @relation(name: "user_voluntary", fields: [user_voluntary_id], references: [id])
   user_elderly_id   Int      
   user_voluntary_id Int?    
   topic_id          Int

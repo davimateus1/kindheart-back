@@ -5,11 +5,10 @@ export * from './authControllers/sendCodeController'
 
 export * from './userControllers/getUserProfileController'
 export * from './userControllers/getAllUsersController'
+export * from './userControllers/friendController'
 
 export * from './feedControllers/getUserFeedController'
 export * from './feedControllers/createFeedPostController'
 export * from './feedControllers/likePostController'
 export * from './feedControllers/createTopicController'
 export * from './feedControllers/getTopicsController'
-export * from './feedControllers/friendshipRequestController'
-export * from './feedControllers/friendController'

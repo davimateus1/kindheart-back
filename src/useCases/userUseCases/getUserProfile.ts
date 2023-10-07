@@ -1,8 +1,26 @@
 import prisma from '@/database/client'
 import { RoleType } from '@/types'
 
+// TODO: Ver se é realmente necessário o user_role
 async function getUserProfile(user_id: string, user_role: RoleType) {
   const userId = Number(user_id)
+
+  const friendsCount = await prisma.friendship.count({
+    where: {
+      OR: [
+        { user_one_id: userId, status: 'ACCEPTED' },
+        { user_two_id: userId, status: 'ACCEPTED' },
+      ],
+    },
+  })
+
+  const postsCount = await prisma.activity.count({
+    where: { user_elderly_id: userId },
+  })
+
+  const reviewsCount = await prisma.review.count({
+    where: { userId },
+  })
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -18,8 +36,6 @@ async function getUserProfile(user_id: string, user_role: RoleType) {
       updated_at: true,
       photo: true,
       role: true,
-      ...(user_role === 'VOLUNTARY' && { activities_voluntary: true }),
-      ...(user_role === 'ELDERLY' && { activities_elderly: true }),
       user_reviews: true,
     },
   })
@@ -35,6 +51,9 @@ async function getUserProfile(user_id: string, user_role: RoleType) {
   return {
     ...user,
     age: userAge,
+    posts_count: postsCount,
+    friends_count: friendsCount,
+    reviews_count: reviewsCount,
   }
 }
 
