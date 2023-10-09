@@ -12,3 +12,6 @@ export * from './feedUseCases/createFeedPost'
 export * from './feedUseCases/likePost'
 export * from './feedUseCases/createTopic'
 export * from './feedUseCases/getTopics'
+
+export * from './chatUseCases/createChat'
+export * from './chatUseCases/getUserChats'

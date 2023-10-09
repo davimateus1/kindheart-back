@@ -67,8 +67,8 @@ model Activity {
   topic             Topic    @relation(name: "activity_topic", fields: [topic_id], references: [id])
   user_elderly      User     @relation(name: "user_elderly", fields: [user_elderly_id], references: [id])
   user_voluntary    User?    @relation(name: "user_voluntary", fields: [user_voluntary_id], references: [id])
-  user_elderly_id   Int      
-  user_voluntary_id Int?    
+  user_elderly_id   Int
+  user_voluntary_id Int?
   topic_id          Int
   description       String
   status            Status   @default(FREE)
@@ -105,14 +105,15 @@ model Message {
 }
 
 model Chat {
-  id               Int       @id @default(autoincrement())
-  user_sender      User      @relation(name: "user_sender", fields: [user_sender_id], references: [id])
-  user_receiver    User      @relation(name: "user_receiver", fields: [user_receiver_id], references: [id])
-  user_sender_id   Int
-  user_receiver_id Int
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
-  messages         Message[]
+  id                     Int       @id @default(autoincrement())
+  user_sender            User      @relation(name: "user_sender", fields: [user_sender_id], references: [id])
+  user_receiver          User      @relation(name: "user_receiver", fields: [user_receiver_id], references: [id])
+  activity_id            Int
+  user_sender_id         Int
+  user_receiver_id       Int
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  messages               Message[]
 }
 
 model Topic {

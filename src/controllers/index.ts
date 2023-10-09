@@ -12,3 +12,6 @@ export * from './feedControllers/createFeedPostController'
 export * from './feedControllers/likePostController'
 export * from './feedControllers/createTopicController'
 export * from './feedControllers/getTopicsController'
+
+export * from './chatControllers/createChatController'
+export * from './chatControllers/getUserChatsController'

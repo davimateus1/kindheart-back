@@ -71,3 +71,13 @@ export const allUsersValidator = z.object({
   take: z.string(),
   search: z.string().optional(),
 })
+
+export const createChatValidator = z.object({
+  user_one_id: z.string(),
+  user_two_id: z.string(),
+  activity_id: z.string(),
+})
+
+export const getUserChatsValidator = z.object({
+  user_id: z.string(),
+})

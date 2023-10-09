@@ -11,11 +11,11 @@ async function registerUserController(
     const userData = registerUserValidator.parse(request.body)
     const user = await registerUser(userData)
 
-    await sendCode({
-      user_code: user.user_code,
-      first_name: user.first_name,
-      personal_phone: user.personal_phone,
-    })
+    // await sendCode({
+    //   user_code: user.user_code,
+    //   first_name: user.first_name,
+    //   personal_phone: user.personal_phone,
+    // })
 
     return reply.status(201).send(user)
   } catch (error) {

@@ -79,6 +79,7 @@ CREATE TABLE "Message" (
 -- CreateTable
 CREATE TABLE "Chat" (
     "id" SERIAL NOT NULL,
+    "activity_id" INTEGER NOT NULL,
     "user_sender_id" INTEGER NOT NULL,
     "user_receiver_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
