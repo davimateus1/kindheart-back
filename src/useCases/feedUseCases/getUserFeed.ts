@@ -32,7 +32,7 @@ async function getUserFeed(user_id: string, take: string) {
     include: {
       topic: true,
       user_elderly: {
-        select: { photo: true, first_name: true, last_name: true },
+        select: { photo: true, first_name: true, last_name: true, role: true },
       },
     },
   })

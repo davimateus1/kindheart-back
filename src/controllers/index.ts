@@ -15,3 +15,4 @@ export * from './feedControllers/getTopicsController'
 
 export * from './chatControllers/createChatController'
 export * from './chatControllers/getUserChatsController'
+export * from './chatControllers/getUserChatController'

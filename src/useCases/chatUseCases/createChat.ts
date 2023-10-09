@@ -9,6 +9,18 @@ async function createChat(
   const userTwoId = Number(user_two_id)
   const activityId = Number(activity_id)
 
+  const chatAlreadyExists = await prisma.chat.findFirst({
+    where: {
+      user_sender_id: userOneId,
+      user_receiver_id: userTwoId,
+      activity_id: activityId,
+    },
+  })
+
+  if (chatAlreadyExists) {
+    throw new Error('Chat already exists.')
+  }
+
   const createdChat = await prisma.chat.create({
     data: {
       user_sender_id: userOneId,

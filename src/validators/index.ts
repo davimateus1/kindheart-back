@@ -81,3 +81,9 @@ export const createChatValidator = z.object({
 export const getUserChatsValidator = z.object({
   user_id: z.string(),
 })
+
+export const getUserChatValidator = z.object({
+  chat_id: z.string(),
+  activity_id: z.string(),
+  user_sender_id: z.string(),
+})

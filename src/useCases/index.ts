@@ -15,3 +15,4 @@ export * from './feedUseCases/getTopics'
 
 export * from './chatUseCases/createChat'
 export * from './chatUseCases/getUserChats'
+export * from './chatUseCases/getUserChat'
