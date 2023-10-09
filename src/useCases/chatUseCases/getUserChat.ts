@@ -1,13 +1,8 @@
 import prisma from '@/database/client'
 
-async function getUserChat(
-  user_sender_id: string,
-  chat_id: string,
-  activity_id: string,
-) {
+async function getUserChat(chat_id: string, activity_id: string) {
   const chatId = Number(chat_id)
   const activityId = Number(activity_id)
-  const userSenderId = Number(user_sender_id)
 
   const activityExists = await prisma.activity.findFirst({
     where: { id: activityId },
@@ -16,10 +11,6 @@ async function getUserChat(
   const chat = await prisma.chat.findFirst({
     where: {
       id: chatId,
-      OR: [
-        { user_sender_id: userSenderId },
-        { user_receiver_id: userSenderId },
-      ],
     },
     include: {
       user_sender: {

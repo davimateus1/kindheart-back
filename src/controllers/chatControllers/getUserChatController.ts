@@ -7,11 +7,9 @@ async function getUserChatController(
   reply: FastifyReply,
 ) {
   try {
-    const { user_sender_id, chat_id, activity_id } = getUserChatValidator.parse(
-      request.params,
-    )
+    const { chat_id, activity_id } = getUserChatValidator.parse(request.params)
 
-    const chat = await getUserChat(user_sender_id, chat_id, activity_id)
+    const chat = await getUserChat(chat_id, activity_id)
 
     return reply.status(200).send(chat)
   } catch (error) {

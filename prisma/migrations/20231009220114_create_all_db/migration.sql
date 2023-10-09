@@ -8,6 +8,9 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'VOLUNTARY', 'ELDERLY');
 CREATE TYPE "Status" AS ENUM ('FREE', 'ALOCATED', 'STARTED', 'FINISHED', 'CANCELED');
 
 -- CreateEnum
+CREATE TYPE "ChatStatus" AS ENUM ('ACTIVE', 'INACTIVE');
+
+-- CreateEnum
 CREATE TYPE "FriendshipStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED', 'CANCELED');
 
 -- CreateTable
@@ -80,6 +83,8 @@ CREATE TABLE "Message" (
 CREATE TABLE "Chat" (
     "id" SERIAL NOT NULL,
     "activity_id" INTEGER NOT NULL,
+    "status" "ChatStatus" NOT NULL DEFAULT 'ACTIVE',
+    "success" BOOLEAN NOT NULL,
     "user_sender_id" INTEGER NOT NULL,
     "user_receiver_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

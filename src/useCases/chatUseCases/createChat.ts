@@ -26,6 +26,7 @@ async function createChat(
       user_sender_id: userOneId,
       user_receiver_id: userTwoId,
       activity_id: activityId,
+      success: false,
     },
   })
 

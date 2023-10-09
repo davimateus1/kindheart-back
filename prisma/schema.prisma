@@ -27,6 +27,11 @@ enum Status {
   CANCELED
 }
 
+enum ChatStatus {
+  ACTIVE
+  INACTIVE
+}
+
 enum FriendshipStatus {
   PENDING
   ACCEPTED
@@ -105,15 +110,17 @@ model Message {
 }
 
 model Chat {
-  id                     Int       @id @default(autoincrement())
-  user_sender            User      @relation(name: "user_sender", fields: [user_sender_id], references: [id])
-  user_receiver          User      @relation(name: "user_receiver", fields: [user_receiver_id], references: [id])
-  activity_id            Int
-  user_sender_id         Int
-  user_receiver_id       Int
-  created_at             DateTime  @default(now())
-  updated_at             DateTime  @updatedAt
-  messages               Message[]
+  id               Int        @id @default(autoincrement())
+  user_sender      User       @relation(name: "user_sender", fields: [user_sender_id], references: [id])
+  user_receiver    User       @relation(name: "user_receiver", fields: [user_receiver_id], references: [id])
+  activity_id      Int
+  status           ChatStatus @default(ACTIVE)
+  success          Boolean    
+  user_sender_id   Int
+  user_receiver_id Int
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
+  messages         Message[]
 }
 
 model Topic {

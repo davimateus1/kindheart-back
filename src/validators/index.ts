@@ -85,5 +85,12 @@ export const getUserChatsValidator = z.object({
 export const getUserChatValidator = z.object({
   chat_id: z.string(),
   activity_id: z.string(),
-  user_sender_id: z.string(),
+})
+
+export const elderlyAcceptVoluntaryValidator = z.object({
+  activity_id: z.string(),
+  elderly_id: z.string(),
+  voluntary_id: z.string(),
+  chat_id: z.string(),
+  action: z.enum(['STARTED', 'CANCELED', 'FINISHED']),
 })
