@@ -94,3 +94,9 @@ export const elderlyAcceptVoluntaryValidator = z.object({
   chat_id: z.string(),
   action: z.enum(['STARTED', 'CANCELED', 'FINISHED']),
 })
+
+export const createMessageValidator = z.object({
+  author_id: z.string(),
+  chat_id: z.string(),
+  text: z.string(),
+})

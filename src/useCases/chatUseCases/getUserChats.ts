@@ -26,7 +26,23 @@ async function getUserChats(user_id: string) {
     },
   })
 
-  return chats
+  const chatWithRelationedUserPhoto = chats.map((chat) => {
+    if (chat.user_sender_id === userId) {
+      return {
+        ...chat,
+        user_photo: chat.user_receiver.photo,
+        user_name: `${chat.user_receiver.first_name} ${chat.user_receiver.last_name}`,
+      }
+    }
+
+    return {
+      ...chat,
+      user_photo: chat.user_sender.photo,
+      user_name: `${chat.user_sender.first_name} ${chat.user_sender.last_name}`,
+    }
+  })
+
+  return chatWithRelationedUserPhoto
 }
 
 export { getUserChats }

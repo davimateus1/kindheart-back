@@ -2,9 +2,11 @@ import fastify from 'fastify'
 import cors from '@fastify/cors'
 
 import { routes } from '@/routes'
-import { cloudinaryConfig } from '@/lib'
+import { SocketSingleton, cloudinaryConfig } from '@/lib'
 
 const app = fastify()
+
+SocketSingleton.connect(app.server)
 
 app.register(cors, { origin: '*' })
 routes(app)

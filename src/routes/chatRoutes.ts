@@ -1,5 +1,6 @@
 import {
   createChatController,
+  createMessageController,
   elderlyAcceptedVoluntaryController,
   getUserChatController,
   getUserChatsController,
@@ -12,6 +13,7 @@ async function chatRoutes(app: FastifyInstance) {
   app.get('/:user_id', getUserChatsController)
   app.get('/:chat_id/:activity_id', getUserChatController)
   app.patch('/elderly-action', elderlyAcceptedVoluntaryController)
+  app.post('/message', createMessageController)
 }
 
 export { chatRoutes }

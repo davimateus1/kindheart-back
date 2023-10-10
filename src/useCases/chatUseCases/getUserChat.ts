@@ -37,6 +37,20 @@ async function getUserChat(chat_id: string, activity_id: string) {
     },
   })
 
+  const authorIdMessageWithPhoto = chat?.messages.map((message) => {
+    if (message.author_id === chat?.user_sender.id) {
+      return {
+        ...message,
+        author_photo: chat?.user_sender.photo,
+      }
+    }
+
+    return {
+      ...message,
+      author_photo: chat?.user_receiver.photo,
+    }
+  })
+
   if (!activityExists) {
     throw new Error('Activity not found.')
   }
@@ -45,7 +59,11 @@ async function getUserChat(chat_id: string, activity_id: string) {
     throw new Error('Chat not found.')
   }
 
-  return { ...chat, activity: activityExists }
+  return {
+    ...chat,
+    messages: authorIdMessageWithPhoto,
+    activity: activityExists,
+  }
 }
 
 export { getUserChat }
