@@ -17,6 +17,7 @@ async function createChatController(
       chat_id: createdChat.id,
       user_sender_id: createdChat.user_sender_id,
       activity_id: createdChat.activity_id,
+      user_name: createdChat.user_name,
     })
   } catch (error) {
     return error instanceof Error

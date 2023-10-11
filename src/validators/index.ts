@@ -30,7 +30,6 @@ export const sendCodeValidator = z.object({
 
 export const getUserProfileValidator = z.object({
   user_id: z.string(),
-  user_role: z.enum(['VOLUNTARY', 'ELDERLY']),
 })
 
 export const getUserFeedValidator = z.object({

@@ -1,17 +1,29 @@
 import prisma from '@/database/client'
-import { RoleType } from '@/types'
 
-// TODO: Ver se é realmente necessário o user_role
-async function getUserProfile(user_id: string, user_role: RoleType) {
+async function getUserProfile(user_id: string) {
   const userId = Number(user_id)
 
-  const friendsCount = await prisma.friendship.count({
+  const friends = await prisma.friendship.findMany({
     where: {
       OR: [
-        { user_one_id: userId, status: 'ACCEPTED' },
-        { user_two_id: userId, status: 'ACCEPTED' },
+        {
+          user_one_id: userId,
+        },
+        {
+          user_two_id: userId,
+        },
       ],
     },
+  })
+
+  const friendsCount = friends.length
+
+  const friendsIds = friends.map((friend) => {
+    if (friend.user_one_id === userId) {
+      return friend.user_two_id
+    }
+
+    return friend.user_one_id
   })
 
   const postsCount = await prisma.activity.count({
@@ -20,6 +32,19 @@ async function getUserProfile(user_id: string, user_role: RoleType) {
 
   const reviewsCount = await prisma.review.count({
     where: { userId },
+  })
+
+  const totalUserChats = await prisma.chat.count({
+    where: {
+      OR: [
+        {
+          user_sender_id: userId,
+        },
+        {
+          user_receiver_id: userId,
+        },
+      ],
+    },
   })
 
   const user = await prisma.user.findUnique({
@@ -54,6 +79,8 @@ async function getUserProfile(user_id: string, user_role: RoleType) {
     posts_count: postsCount,
     friends_count: friendsCount,
     reviews_count: reviewsCount,
+    friends: friendsIds,
+    total_chats: totalUserChats,
   }
 }
 

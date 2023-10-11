@@ -30,7 +30,15 @@ async function createChat(
     },
   })
 
-  return createdChat
+  const userReceiverName = await prisma.user.findUnique({
+    where: { id: userTwoId },
+    select: { first_name: true, last_name: true },
+  })
+
+  return {
+    ...createdChat,
+    user_name: `${userReceiverName?.first_name} ${userReceiverName?.last_name}`,
+  }
 }
 
 export { createChat }

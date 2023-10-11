@@ -7,8 +7,8 @@ async function getUserProfileController(
   reply: FastifyReply,
 ) {
   try {
-    const { user_id, user_role } = getUserProfileValidator.parse(request.params)
-    const user = await getUserProfile(user_id, user_role)
+    const { user_id } = getUserProfileValidator.parse(request.params)
+    const user = await getUserProfile(user_id)
 
     return reply.status(200).send(user)
   } catch (error) {
