@@ -1,6 +1,8 @@
 import app from '@/app'
 import '@/database'
 
-app.listen({ port: 5000 }, () => {
-  console.log('🚀 Server running at port 5000')
+const serverPort = Number(process.env.SERVER_PORT)
+
+app.listen({ port: serverPort }, () => {
+  console.log(`🚀 Server running at port ${serverPort}`)
 })
